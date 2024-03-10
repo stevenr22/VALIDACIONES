@@ -1,0 +1,44 @@
+----------------------------------VALIDACIONES-------------------------
+
+.::VALIDAR CEDULA::.
+function validarCedula(e) {
+    // Obtener la longitud actual de la cédula
+    var cedula = document.getElementById("ced").value;
+    // Obtener el código ASCII de la tecla presionada
+    var charCode = e.keyCode;
+    // Permitir las teclas de control como "Enter" y "Backspace"
+    if (charCode == 13 || charCode == 8) {
+        return true;
+    }
+    // Convertir el código ASCII a carácter
+    var charTyped = String.fromCharCode(charCode);
+    // Validar si el carácter ingresado es un número y si la longitud actual es menor que 10
+    if (/\d/.test(charTyped) && cedula.length < 10) {
+        return true;
+    } else {
+        // Si no es un número o la longitud es 10, prevenir la acción por defecto
+        e.preventDefault();
+        return false;
+    }
+}
+
+.::VALIDAR LETRAS::.
+
+function validarLetras(e){
+    var charcode = e.keyCode; //obtener cod de letras
+    if (charcode == 13 || charcode == 8 || charcode == 32){ //validar que permita el boton de enter y 
+        return true;
+    }
+
+    var chartipo = String.fromCharCode(charcode); //convertir el cod en caracter
+    var letras = /^[a-zA-Z]+$/; //expresion para validar letras
+    if (letras.test(chartipo)) { //valido si el caracter es letra
+        return true;
+    } else {
+        e.preventDefault();
+        return false;
+        
+    }
+
+
+}
