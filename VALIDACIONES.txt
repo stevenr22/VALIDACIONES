@@ -42,3 +42,14 @@ function validarLetras(e){
 
 
 }
+
+
+VALIDAR EDAD
+
+function validaredad() {
+    var edad = parseInt(document.getElementById("edad").value, 10);
+    
+    if (isNaN(edad) || edad < 0 || edad > 100) {
+        document.getElementById("edad").value = ""; // Limpiar el valor si no es válido
+    }
+}
