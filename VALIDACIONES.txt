@@ -46,10 +46,19 @@ function validarLetras(e){
 
 VALIDAR EDAD
 
-function validaredad() {
-    var edad = parseInt(document.getElementById("edad").value, 10);
-    
-    if (isNaN(edad) || edad < 0 || edad > 100) {
-        document.getElementById("edad").value = ""; // Limpiar el valor si no es válido
+function validarEdad() {
+    var input = document.getElementById("edad");
+    var edad = input.value;
+
+    // Eliminar caracteres no numéricos
+    edad = edad.replace(/[^0-9]/g, '');
+
+    // Convertir a número
+    var edadNum = parseInt(edad, 10);
+
+    if (isNaN(edadNum) || edadNum < 0 || edadNum >= 100) {
+        input.value = edad.substring(0, edad.length - 1); // Eliminar el último carácter inválido
+    } else {
+        input.value = edad;
     }
 }
