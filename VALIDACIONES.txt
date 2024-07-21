@@ -1,67 +1,75 @@
 ----------------------------------VALIDACIONES-------------------------
+//mostrar y ocultar contraseña
+function mostrarContra() {
+    var contra = document.getElementById("contra");
 
-.::VALIDAR CEDULA::.
-function validarCedula(e) {
-    // Obtener la longitud actual de la cédula
-    var cedula = document.getElementById("ced").value;
-    // Obtener el código ASCII de la tecla presionada
-    var charCode = e.keyCode;
-    // Permitir las teclas de control como "Enter" y "Backspace"
-    if (charCode == 13 || charCode == 8) {
+    // Verificar el tipo actual de input
+    if (contra.type === "password") {
+        contra.type = "text"; // Si es contraseña, mostrar texto plano
+    } else {
+        contra.type = "password"; // Si es texto plano, cambiar a contraseña
+    }
+}
+
+
+//validar nombre y ape
+function validarLetras(e){
+    var codi_char = e.keyCode;
+    if(codi_char == 13 || codi_char == 8 || codi_char == 32){
         return true;
     }
-    // Convertir el código ASCII a carácter
-    var charTyped = String.fromCharCode(charCode);
-    // Validar si el carácter ingresado es un número y si la longitud actual es menor que 10
-    if (/\d/.test(charTyped) && cedula.length < 10) {
+    var tipo = String.fromCharCode(codi_char);
+    var expresion = /^[a-zA-Z]+$/;
+    if (expresion.test(tipo)) {
         return true;
     } else {
-        // Si no es un número o la longitud es 10, prevenir la acción por defecto
+        e.preventDefault();
+        return false;
+    }
+
+}
+
+//validar edad
+function validarEdad(e){
+    var inputEdad = document.getElementById("edad").value;
+    var mensaje_error = document.getElementById("msm");
+    var codi_char = e.keyCode;
+    if(codi_char == 13 || codi_char == 8){
+        return true;
+    }
+    var tipo = String.fromCharCode(codi_char);
+    var expresion = /\d/;
+    if (expresion.test(tipo)) {
+        var edad_entera = parseInt(inputEdad + tipo, 10);
+        if (edad_entera>100) {
+            e.preventDefault();
+            document.getElementById("edad").value = "";
+            mensaje_error.textContent = "LA EDAD NO DEBE DE SER MAYOR A 100";
+            mensaje_error.style.color = "red";
+        } else {
+            mensaje_error.innerText = "";
+        }
+        return true;
+    } else {
         e.preventDefault();
         return false;
     }
 }
 
-.::VALIDAR LETRAS::.
-
-function validarLetras(e){
-    var charcode = e.keyCode; //obtener cod de letras
-    if (charcode == 13 || charcode == 8 || charcode == 32){ //validar que permita el boton de enter y 
+//validar cedula
+function validarCed(e){
+    var ced = document.getElementById("ced").value;
+    var cod = e.keyCode;
+    if (cod == 13 || cod == 8) {
         return true;
-    }
-
-    var chartipo = String.fromCharCode(charcode); //convertir el cod en caracter
-    var letras = /^[a-zA-Z]+$/; //expresion para validar letras
-    if (letras.test(chartipo)) { //valido si el caracter es letra
-        return true;
-    } else {
-        e.preventDefault();
-        return false;
         
     }
-
-
+    var tipo = String.fromCharCode(cod);
+    var expresion = /\d/;
+    if (expresion.test(tipo) && ced.length < 10) {
+        return true;
+    } else {
+        e.preventDefault();
+        return false;
+    }
 }
-
-
-VALIDAR EDAD
-
-function validarEdad(e){
-	var inputEdad = document.getElementById("edad").value;
-	var filtro = inputEdad.replace(/[^0-9]/g, "");
-	var edad = parseInt(filtro, 10);
-	var mensaje_error = document.getElementById("msm");
-
-	if (edad > 100) {
-		e.preventDefault();
-		document.getElementById("edad").value = "";
-		mensaje_error.innerText = "La edad no debe de ser mayor a 100";
-	}else{
-		mensaje_error.innerText = "";
-		if (filtro !== inputEdad) {
-			e.preventDefault();
-			document.getElementById("edad").value = filtro;
-		}
-	}
-}
-document.getElementById("edad").addEventListener("input", validarEdad);
