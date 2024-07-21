@@ -46,19 +46,22 @@ function validarLetras(e){
 
 VALIDAR EDAD
 
-function validarEdad() {
-    var input = document.getElementById("edad");
-    var edad = input.value;
+function validarEdad(e){
+	var inputEdad = document.getElementById("edad").value;
+	var filtro = inputEdad.replace(/[^0-9]/g, "");
+	var edad = parseInt(filtro, 10);
+	var mensaje_error = document.getElementById("msm");
 
-    // Eliminar caracteres no numéricos
-    edad = edad.replace(/[^0-9]/g, '');
-
-    // Convertir a número
-    var edadNum = parseInt(edad, 10);
-
-    if (isNaN(edadNum) || edadNum < 0 || edadNum >= 100) {
-        input.value = edad.substring(0, edad.length - 1); // Eliminar el último carácter inválido
-    } else {
-        input.value = edad;
-    }
+	if (edad > 100) {
+		e.preventDefault();
+		document.getElementById("edad").value = "";
+		mensaje_error.innerText = "La edad no debe de ser mayor a 100";
+	}else{
+		mensaje_error.innerText = "";
+		if (filtro !== inputEdad) {
+			e.preventDefault();
+			document.getElementById("edad").value = filtro;
+		}
+	}
 }
+document.getElementById("edad").addEventListener("input", validarEdad);
